@@ -31,7 +31,7 @@ func main() {
 
 	// Run the service if so
 	if inService {
-		//TODO runService(svcName, false)
+		runService(svcName)
 		return
 	}
 
@@ -50,25 +50,18 @@ func main() {
 
 	// Determining what command was specified
 	switch cmd {
-	case "debug":
-		// TODO runService(svcName, true)
-		return
 	case "install":
 		err = installService(svcName, svcDsc)
 	case "remove":
 		err = removeService(svcName)
 	case "start":
-		//TODO startService(svcName)
-		return
+		err = startService(svcName)
 	case "stop":
-		//TODO controlService(svcName, svc.Stop, svc.Stopped)
-		return
+		err = controlService(svcName, svc.Stop, svc.Stopped)
 	case "pause":
-		//TODO controlService(svcName, svc.Pause, svc.Paused)
-		return
+		err = controlService(svcName, svc.Pause, svc.Paused)
 	case "continue":
-		//TODO controlService(svcName, svc.Continue, svc.Running)
-		return
+		err = controlService(svcName, svc.Continue, svc.Running)
 	default:
 		usage(fmt.Sprintf("invalid command: %v", cmd))
 	}
@@ -83,7 +76,7 @@ func usage(errmsg string) {
 		"%s\n\n"+
 			"usage: %s <command>\n"+
 			"       where <command> is one of\n"+
-			"       install, remove, debug, start, stop, pause or continue.\n",
+			"       install, remove, start, stop, pause or continue.\n",
 		errmsg, os.Args[0])
 	if err != nil {
 		log.Println("Error printing usage message to the 'Stderr': ", err)
