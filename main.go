@@ -19,8 +19,8 @@ var (
 
 func main() {
 	// Parsing command line arguments
-	flag.StringVar(&svcName, "name", svcName, "name of the service")
-	flag.StringVar(&svcDsc, "description", svcDsc, "description of the service")
+	flag.StringVar(&svcName, "name", "TemplateService", "name of the service")
+	flag.StringVar(&svcDsc, "description", "", "description of the service")
 	flag.Parse()
 
 	//Checking whether the app is running as a service
@@ -36,7 +36,7 @@ func main() {
 	}
 
 	//Checking if arguments were specified
-	if len(os.Args) < 2 {
+	if len(flag.Args()) < 1 {
 		usage("no command specified")
 	}
 
@@ -46,7 +46,7 @@ func main() {
 	}
 
 	// Parsing command
-	cmd := strings.ToLower(os.Args[1])
+	cmd := strings.ToLower(flag.Args()[0])
 
 	// Determining what command was specified
 	switch cmd {
